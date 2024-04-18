@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+{%block title%} Criar gasto {%endblock title%}
+{%block header%}<h1>Criar gasto</h1>{%endblock header%}
+{%block content%}
+<form method='POST'>
+  {%csrf_token%}
+  {{form.as_p}}
+<input type="submit" name="" value="Criar">
+</form>
+
+{%endblock content%}

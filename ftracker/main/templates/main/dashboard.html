@@ -1,0 +1,122 @@
+{%extends 'base.html'%}
+{%block title%}
+Dashboard
+{%endblock title%}
+{%block header%}
+<h1 class=''>Dashboard</h1>
+{%endblock header%}
+
+{%block content%}
+
+<div style = 'width:60%; float:left'>
+  <a href = {%url 'gasto'%} class='btn btn-primary'>Criar gasto</a>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Detalhes</th>
+        <th>Valor</th>  
+      </tr>
+    </thead>
+    <tbody>
+      {%for gasto in gastos%}
+      <tr>
+        <td>{{gasto.nome}}</td>
+        <td>{{gasto.descricao}}</td>
+        <td>{{gasto.valor}}</td>
+        <td><a href ={%url 'deletar' gasto.id%} class = 'btn btn-danger'>Deletar</a></td>
+        <td><a href ={%url 'editar' gasto.id%} class = 'btn btn-primary'>Editar</a></td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+<br>
+
+<div style='width:40%; float:right'>
+<h3>Gasto total</h3>
+<h4>{{valortotal}}</h4>
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+<br>
+</div>
+
+
+<script>
+// 'api/chartdata?format=json'
+// '/api/chartdata?format=api'
+// '/api/chartdata'
+
+var endpoint = '/api/chartdata'
+var gastos = []
+var gastos_nome = []
+$.ajax({
+  method:"GET",
+  url:endpoint,
+  success: function(data){
+    // console.log(data)
+    // console.log(data[0])
+    // console.log(data[0].valor)
+    $.each(data, function(index, value){
+      console.log(index)
+      console.log(value.valor)
+      gastos.push(value.valor)
+      gastos_nome.push(value.nome)
+    })
+    console.log(gastos)
+      const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: gastos_nome,
+      datasets: [{
+        label: 'valor gasto',
+        data: gastos,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  },
+  error:function(error_data){
+    console.log("error")
+  }
+})
+
+
+  // const ctx = document.getElementById('myChart');
+
+  // new Chart(ctx, {
+  //   type: 'pie',
+  //   data: {
+  //     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  //     datasets: [{
+  //       label: '# of Votes',
+  //       data: gastos,
+  //       borderWidth: 1
+  //     }]
+  //   },
+  //   options: {
+  //     scales: {
+  //       y: {
+  //         beginAtZero: true
+  //       }
+  //     }
+  //   }
+  // });
+
+
+</script>
+{%endblock content%}
+
+
+

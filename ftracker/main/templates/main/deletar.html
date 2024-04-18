@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+{%block title%} Deletar {%endblock title%}
+{%block header%}Deletar{%endblock header%}
+{%block content%}
+Voce tem certeza que deseja deletar:
+<br>
+Nome: {{gasto.nome}}
+<br>
+Detalhes: {{gasto.detalhes}}
+<br>
+Valor: {{gasto.valor}}
+<br><br>
+<a class = 'btn btn-danger' href = {%url 'dashboard'%}>Cancelar</a>
+<a class = 'btn btn-primary' href = {%url 'deletar_post' gasto.id%}>Sim</a>
+{%endblock content%}
