@@ -15,6 +15,7 @@ Dashboard
       <tr>
         <th>Nome</th>
         <th>Detalhes</th>
+        <th>Caregoria</th>
         <th>Valor</th>  
       </tr>
     </thead>
@@ -23,6 +24,11 @@ Dashboard
       <tr>
         <td>{{gasto.nome}}</td>
         <td>{{gasto.descricao}}</td>
+        {%if gasto.categoria == None%}
+        <td>---</td>
+        {%else%}
+        <td>{{gasto.categoria}}</td>
+        {%endif%}
         <td>{{gasto.valor}}</td>
         <td><a href ={%url 'deletar' gasto.id%} class = 'btn btn-danger'>Deletar</a></td>
         <td><a href ={%url 'editar' gasto.id%} class = 'btn btn-primary'>Editar</a></td>
