@@ -19,9 +19,14 @@ class ChartData(APIView):
         return Response(gastos)
 
 
+def deleteall(request):
+    a = Gasto.objects.all().delete()
+    return redirect('dashboard')
+
+
 def teste(request):
-    a = Gasto.categoria_lista
-    print(a[0][0])
+    a = Gasto.objects.get(pk=1)
+    print(request.user.id)
     return HttpResponse('funciona')
 
 
@@ -58,7 +63,8 @@ def cadastro(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    gastos_list = Gasto.objects.all()
+    # gastos_list = Gasto.objects.all()
+    gastos_list = Gasto.objects.filter(user=request.user)
     valortotal = 0
     categoria_lista = []
     for gasto in gastos_list:
@@ -85,6 +91,11 @@ def gasto(request):
     if (request.method == 'POST'):
         form = GastoForm(request.POST)
         if form.is_valid():
+            form.user = request.user.id
+            print('CURRENT USER: ', request.user)
+            print('CURRENT USER ID', request.user.id)
+            print('CURRENT FORM.USER: ', form.user)
+            print('CURRENT FORM: ', form)
             form.save()
             return redirect('dashboard')
     else:
@@ -112,7 +123,7 @@ def deletar_post(request, gasto_id):
 
 @login_required(login_url='login')
 def editar(request, gasto_id):
-    gasto = get_object_or_404(Gasto, pk=gasto_id)
+    gasto = get_object_or_404(Gasto, pk=gasto_id, user=request.user)
     form = GastoForm(instance=gasto)
     context = {
         'gasto': gasto,

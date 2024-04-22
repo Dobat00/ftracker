@@ -5,6 +5,7 @@ from main.views import ChartData
 
 urlpatterns = [
     path('teste', views.teste, name='teste'),
+    path('deleteall', views.deleteall, name='deleteall'),
     path('api/chartdata', ChartData.as_view(), name='chartdata'),
     path('', views.login, name='login'),
     path('cadastro', views.cadastro, name='cadastro'),

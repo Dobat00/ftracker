@@ -23,6 +23,7 @@ class CadastroForm(UserCreationForm):
 
 
 class GastoForm(ModelForm):
+
     class Meta:
         model = Gasto
         fields = ['nome', 'descricao', 'valor', 'categoria']
