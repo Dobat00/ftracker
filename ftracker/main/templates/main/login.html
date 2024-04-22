@@ -1,11 +1,14 @@
-<h1>login</h1>
+{%extends 'base.html'%}
+{%block content%}
+<h1>Login</h1>
 
 <form method="POST" accept-charset="utf-8">
 	{%csrf_token%}
 	{{form.as_p}}
 	<input type=submit value='Entrar'>
 	ou
-	<a href="#" >Entrar como convidado</a>
-	<br>
+	{# <a href="#" >Entrar como convidado</a> #}
+
 	<a href={%url 'cadastro'%}>Cadastrar</a>
 </form>
+{%endblock content%}

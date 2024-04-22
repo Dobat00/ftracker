@@ -12,7 +12,8 @@ class Gasto(models.Model):
     nome = models.CharField(max_length=200)
     descricao = models.CharField(max_length=200)
     valor = models.FloatField()
-    categoria = models.CharField(max_length=200, choices=categoria_lista, null=True)
+    categoria = models.CharField(
+        max_length=200, choices=categoria_lista, null=True)
 
     def __str__(self):
         return self.nome

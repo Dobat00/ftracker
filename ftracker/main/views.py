@@ -19,7 +19,9 @@ class ChartData(APIView):
         return Response(gastos)
 
 
-def home(request):
+def teste(request):
+    a = Gasto.categoria_lista
+    print(a[0][0])
     return HttpResponse('funciona')
 
 
@@ -58,11 +60,16 @@ def cadastro(request):
 def dashboard(request):
     gastos_list = Gasto.objects.all()
     valortotal = 0
+    categoria_lista = []
     for gasto in gastos_list:
         valortotal = gasto.valor + valortotal
+    for i in Gasto.categoria_lista:
+        categoria_lista.append(i[0])
+    print(categoria_lista)
     context = {
         'gastos': gastos_list,
-        'valortotal': valortotal
+        'valortotal': valortotal,
+        'categoria_lista': categoria_lista,
     }
     return render(request, 'main/dashboard.html', context)
 
