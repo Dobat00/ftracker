@@ -91,12 +91,11 @@ def gasto(request):
     if (request.method == 'POST'):
         form = GastoForm(request.POST)
         if form.is_valid():
-            form.user = request.user.id
-            print('CURRENT USER: ', request.user)
-            print('CURRENT USER ID', request.user.id)
-            print('CURRENT FORM.USER: ', form.user)
-            print('CURRENT FORM: ', form)
+            form.user_id = request.user.id
+            print('FORM.USER_ID:', form.user_id)
+            print('REQUEST.USER.ID:', request.user.id)
             form.save()
+
             return redirect('dashboard')
     else:
         form = GastoForm()

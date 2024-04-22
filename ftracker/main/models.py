@@ -9,7 +9,7 @@ class Gasto(models.Model):
         ('Lazer', 'Lazer'),
         ('Compras', "Compras"),
     ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     nome = models.CharField(max_length=200)
     descricao = models.CharField(max_length=200)
     valor = models.FloatField()
