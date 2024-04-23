@@ -16,6 +16,7 @@ class ChartData(APIView):
 
     def get(self, request, format=None):
         gastos = list(Gasto.objects.values())
+        print(gastos)
         return Response(gastos)
 
 
@@ -76,6 +77,7 @@ def dashboard(request):
         'gastos': gastos_list,
         'valortotal': valortotal,
         'categoria_lista': categoria_lista,
+        'current_user': request.user,
     }
     return render(request, 'main/dashboard.html', context)
 
@@ -91,10 +93,12 @@ def gasto(request):
     if (request.method == 'POST'):
         form = GastoForm(request.POST)
         if form.is_valid():
-            form.user_id = request.user.id
-            print('FORM.USER_ID:', form.user_id)
-            print('REQUEST.USER.ID:', request.user.id)
-            form.save()
+            gasto = form.save(commit=False)
+            gasto.user = request.user
+            # print('REQUEST.USER: ', request.user)
+            # print('FORM.USER_ID:', form.user_id)
+            # print('REQUEST.USER.ID:', request.user.id)
+            gasto.save()
 
             return redirect('dashboard')
     else:

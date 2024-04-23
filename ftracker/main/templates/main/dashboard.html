@@ -9,7 +9,7 @@ Dashboard
 {%endblock header%}
 
 {%block content%}
-
+<h1>{{current_user}} {{current_user.id}}</h1>
 <div style = 'width:60%; float:left'>
   <a href = {%url 'gasto'%} class='btn btn-primary'>Criar gasto</a>
   <table>
@@ -72,10 +72,14 @@ $.ajax({
     // console.log(data[0])
     // console.log(data[0].valor)
     $.each(data, function(index, value){
+      console.log(value.user_id)
       console.log(index)
       console.log(value.valor)
+      if(value.user_id == {{current_user.id}}){
       gastos.push(value.valor)
       gastos_nome.push(value.nome)
+
+      }
     })
     console.log(gastos)
       const ctx = document.getElementById('myChart');
